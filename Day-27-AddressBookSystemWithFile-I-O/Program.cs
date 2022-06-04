@@ -1,36 +1,63 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
 
-namespace AddressBookSystem_File_I_O
+namespace AddressBookProblemWithJSON
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\HP\Bridgelabz-145\Assignments_\Day 27\AddressBookSystem_File_I_O\AddressBookSystem_File_I_O\Records.txt";
-            InputPerson input = new InputPerson();
-            //Getting details from user
-            Console.WriteLine("\nEnter your First Name : ");
-            input.fName = Console.ReadLine();
-            Console.WriteLine("Enter your Last Name : ");
-            input.lName = Console.ReadLine();
-            Console.WriteLine("Enter your Address : ");
-            input.address = Console.ReadLine();
-            Console.WriteLine("Enter your City Name : ");
-            input.city = Console.ReadLine();
-            Console.WriteLine("Enter your State Name : ");
-            input.state = Console.ReadLine();
-            Console.WriteLine("Enter your Zip Code : ");
-            input.zip = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter your Phone Number : ");
-            input.phoneNumber = Convert.ToInt64(Console.ReadLine());
-            Console.WriteLine("Enter your Email Address: ");
-            input.email = Console.ReadLine();
+            Console.WriteLine("Welcome to AddressBook Problem with JSON \n\n");
+            AddressBook manager = new AddressBook();
 
-            FileIO.WriteRecordsInFile(path, input); // Writing records into file
-            Console.WriteLine("\n\nRecords present in file are : ");
-            FileIO.ReadRecordsFromFile(path); // Reading all records from file 
+            //Infinite Loop
+            while (true)
+            {
+                Console.WriteLine("\nPlease Select any one Operation: ");
+                Console.WriteLine("1: To add Details to Address Book");
+                Console.WriteLine("2: To Display All Contacts of Address Book");
+                Console.WriteLine("3: To Exit");
+                int read = int.Parse(Console.ReadLine());
+                switch (read)
+                {
+                    //For Adding Details to Address Book
+                    case 1:
+                        {
+                            Person person = new Person();
+                            Console.WriteLine("Enter First Name: ");
+                            string fname = Console.ReadLine();
+                            person.FName = fname;
+                            Console.WriteLine("Enter Last Name: ");
+                            string lname = Console.ReadLine();
+                            person.LName = lname;
+                            Console.WriteLine("Enter Address: ");
+                            string address = Console.ReadLine();
+                            person.Address = address;
+                            Console.WriteLine("Enter Phone Number: ");
+                            long number = long.Parse(Console.ReadLine());
+                            person.PhoneNumber = number;
+                            manager.addPerson(person);
+                        }
+                        break;
+                    //Display contact list of addressbook
+                    case 2:
+                        {
+                            manager.Display();
+                        }
+                        break;
+                    //for exit from infinite loop
+                    case 3:
+                        {
+                            Environment.Exit(0);
+                        }
+                        break;
+                    default:
+                        {
+                            Console.WriteLine("Please Select any one operation ");
+                        }
+                        break;
+                }
+            }
         }
     }
 }
